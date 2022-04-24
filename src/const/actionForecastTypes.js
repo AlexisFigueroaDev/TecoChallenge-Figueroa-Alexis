@@ -1,0 +1,7 @@
+export const GET_FORECAST_START = 'forecast:GET_FORECAST_START';
+export const GET_FORECAST_SUCCESS = 'forecast:GET_FORECAST_SUCCESS';
+export const GET_FORECAST_ERROR = 'forecast:GET_FORECAST_ERROR';
+
+export const GET_FORECAST_DAY_START = 'forecast:GET_FORECAST_DAY_START';
+export const GET_FORECAST_DAY_SUCCESS = 'forecast:GET_FORECAST_DAY_SUCCESS';
+export const GET_FORECAST_DAY_ERROR = 'forecast:GET_FORECAST_DAY_ERROR';
