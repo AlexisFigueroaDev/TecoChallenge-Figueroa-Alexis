@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 if (true) {
   const reactotron = require('./ReactotronConfig').default;
 }

@@ -8,16 +8,7 @@ import sagas from '../sagas';
 
 const enhancers = [];
 
-// if (true) {
-//   const reactotron = require('../../../ReactotronConfig').default;
-//   const sagaMonitor = Reactotron.createSagaMonitor;
-//   let sagaMiddleware = createSagaMiddleware({sagaMonitor});
-//   enhancers.push(Reactotron.createEnhancer());
-// }
-
 export default () => {
-  // const sagaMiddleware = createSagaMiddleware();
-  // const reactotron = require('../../../ReactotronConfig').default;
   const sagaMonitor = Reactotron.createSagaMonitor;
   const sagaMiddleware = createSagaMiddleware({sagaMonitor});
   enhancers.push(Reactotron.createEnhancer());

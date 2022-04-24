@@ -46,10 +46,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   forecastDaily: {
-    height: 150,
+    height: 180,
     width: 80,
     padding: 10,
-    marginBottom: 10,
+    top: 50,
+    marginBottom: 60,
     borderRadius: 18,
     shadowColor: '#000',
     shadowOffset: {
@@ -64,8 +65,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   OtherCity: {
-    height: 200,
-    marginBottom: 20,
+    alignSelf: 'center',
+    height: 80,
+    width: 300,
+    padding: 10,
+    top: 50,
+    marginBottom: 60,
     borderRadius: 18,
     shadowColor: '#000',
     shadowOffset: {
@@ -76,8 +81,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 10,
     backgroundColor: '#81afeb',
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 10,
+    marginRight: 5,
   },
 });
 

@@ -7,8 +7,6 @@ export const useForecastForDay = () => {
   const valueForDay = useSelector(
     state => state.forecasteForDay.forecasteForDay,
   );
-
-  console.log(typeof valueForDay);
   useEffect(() => {
     if (typeof valueForDay === 'object') {
       setListDay(valueForDay.slice(1, 6));
