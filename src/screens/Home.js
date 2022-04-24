@@ -38,7 +38,6 @@ const Home = () => {
       style={{
         ...styles.container,
         marginTop: top,
-        backgroundColor: 'red',
         flex: 1,
       }}>
       <Text style={styles.title}>Clima</Text>
