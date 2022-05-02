@@ -6,6 +6,9 @@ import {
   GET_FORECAST_DAY_START,
   GET_FORECAST_DAY_SUCCESS,
   GET_FORECAST_DAY_ERROR,
+  GET_SELECTED_CITY_START,
+  GET_SELECTED_CITY_SUCCESS,
+  GET_SELECTED_CITY_ERROR,
 } from '../../const/actionForecastTypes';
 
 import apiCall from '../api/forecastApi';
@@ -36,7 +39,15 @@ export function* getForecasteForDay({payload}) {
   }
 }
 
+export function* getSelectedCity({payload}) {
+  yield put({
+    type: GET_SELECTED_CITY_SUCCESS,
+    result: payload,
+  });
+}
+
 export default function* forecast() {
   yield takeLatest(GET_FORECAST_START, getForecast);
   yield takeLatest(GET_FORECAST_DAY_START, getForecasteForDay);
+  yield takeLatest(GET_SELECTED_CITY_START, getSelectedCity);
 }

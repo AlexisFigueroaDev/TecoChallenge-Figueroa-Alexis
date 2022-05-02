@@ -1,6 +1,7 @@
 import axios from 'axios';
+import Config from 'react-native-config';
 
-const baseURL = 'http://api.openweathermap.org/data/2.5/';
+const baseURL = Config.BASE_URL;
 
 export default (url, method, data, params) => {
   return axios({
@@ -8,7 +9,7 @@ export default (url, method, data, params) => {
     method,
     url,
     params: {
-      appid: '73ffa4423dacbbbc0d0eb3a7c9b9d607',
+      appid: Config.APPID,
       units: 'metric',
       lang: 'es',
     },

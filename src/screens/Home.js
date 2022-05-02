@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-native/no-inline-styles */
 
-import {Picker} from '@react-native-picker/picker';
 import React, {useEffect, useState} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, ActivityIndicator} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ForecastComponent from '../components/ForecastComponent';
 import {useForecastForDay} from '../hooks/useForecastForDay';
 import {useWeatherState} from '../hooks/useWeatherState';
@@ -14,12 +12,17 @@ import {
   getForecast,
   getForecasteForDay,
 } from './../redux/actions/forecastActions';
+import PickerComponent from '../components/PickerComponent';
+import ForecastForDayComponent from '../components/ForecastForDayComponent';
+import Config from 'react-native-config';
+import {textTitle} from '../styles/utils/text';
+import {color, size} from '../styles/utils/activityIndicator';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const {ciudad, temp, dt, icon, lat, lon} = useWeatherState();
+  const value = useSelector(state => state.selectedCity.city?.result);
+  const {cityApi, temp, dt, icon, lat, lon} = useWeatherState();
   const {listDay} = useForecastForDay();
-  const [selectedLanguage, setSelectedLanguage] = useState();
   const {top} = useSafeAreaInsets();
   const [city, setCity] = useState('Cordoba');
 
@@ -28,66 +31,51 @@ const Home = () => {
     if (lat !== undefined) {
       dispatch(getForecasteForDay({lat, lon}));
     }
-    if (selectedLanguage !== undefined) {
-      setCity(selectedLanguage);
+
+    if (value !== undefined) {
+      setCity(value);
     }
-  }, [dispatch, lat, selectedLanguage, city]);
+  }, [dispatch, lat, city, value]);
 
   return (
     <View
       style={{
         ...styles.container,
         marginTop: top,
-        flex: 1,
       }}>
-      <Text style={styles.title}>Clima</Text>
+      <Text style={styles.title}>{textTitle}</Text>
       <View style={styles.posterContainer}>
-        <ForecastComponent
-          width={150}
-          height={150}
-          sizeDate={20}
-          sizeTemp={60}
-          toShowCity={true}
-          dt={dt}
-          uri={`https://openweathermap.org/img/wn/${icon}@4x.png`}
-          temp={temp}
-          city={ciudad}
-        />
+        {dt === undefined ? (
+          <View style={styles.spinner}>
+            <ActivityIndicator color={color} size={size} />
+          </View>
+        ) : (
+          <ForecastComponent
+            width={150}
+            height={150}
+            sizeDate={20}
+            sizeTemp={60}
+            toShowCity={true}
+            dt={dt}
+            uri={`${Config.URI_IMG}${icon}${Config.SIZE_IMG}`}
+            temp={temp}
+            city={cityApi}
+          />
+        )}
       </View>
 
-      <View style={styles.diario}>
-        {listDay.map((value, index) => (
-          <View style={styles.forecastDaily} key={index}>
-            <ForecastComponent
-              width={80}
-              height={80}
-              sizeDate={10}
-              sizeTemp={15}
-              toShowCity={false}
-              dt={value.dt}
-              uri={`https://openweathermap.org/img/wn/${value.weather[0].icon}@4x.png`}
-              temp={value.temp.day.toFixed(1)}
-              city={ciudad}
-            />
+      <View style={styles.daily}>
+        {listDay.length === 0 ? (
+          <View style={styles.spinner}>
+            <ActivityIndicator color={color} size={size} />
           </View>
-        ))}
+        ) : (
+          <ForecastForDayComponent listDay={listDay} />
+        )}
       </View>
 
       <View style={styles.OtherCity}>
-        <View>
-          <Picker
-            selectedValue={selectedLanguage}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedLanguage(itemValue)
-            }>
-            <Picker.Item label="Cordoba" value="Cordoba" />
-            <Picker.Item label="Buenos Aires" value="Buenos Aires" />
-            <Picker.Item label="Mendoza" value="Mendoza" />
-            <Picker.Item label="Misiones" value="Misiones" />
-            <Picker.Item label="Salta" value="Salta" />
-            <Picker.Item label="Ushuaia" value="Ushuaia" />
-          </Picker>
-        </View>
+        <PickerComponent />
       </View>
     </View>
   );

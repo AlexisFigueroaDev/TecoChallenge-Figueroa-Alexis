@@ -14,7 +14,7 @@ export default function (state, action) {
       return {...state, forecast: action.result};
       break;
     case GET_FORECAST_ERROR:
-      return {...state, forecaste: null, error: action.error};
+      return {...state, forecast: null, error: action.error};
       break;
     default:
       return {...state};

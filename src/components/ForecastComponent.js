@@ -1,6 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {Text, View, Image} from 'react-native';
+import useCalculeteDay from '../hooks/useCalculeteDay';
+import styles from '../styles/Components/ForecastComponent/ForecastComponent.Style';
 
 const ForecastComponent = ({
   width,
@@ -13,50 +14,16 @@ const ForecastComponent = ({
   city,
   toShowCity,
 }) => {
-  const date = () => {
-    let a = new Date(dt * 1000);
-    let months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
-    let year = a.getFullYear();
-    let month = months[a.getMonth()];
-    let day = a.getDate();
-
-    let time = day + ' ' + month + ' ' + year;
-    return time;
-  };
-
-  const day = date();
+  const {day} = useCalculeteDay(dt);
   return (
     <View>
-      <Text style={{fontSize: sizeDate, color: '#3d3b3d', textAlign: 'center'}}>
-        {day}
-      </Text>
+      <Text style={{...styles.dayText, fontSize: sizeDate}}>{day}</Text>
       <Image
-        style={{width: width, height: height, alignSelf: 'center'}}
+        style={{...styles.img, width: width, height: height}}
         source={{uri: uri}}
       />
-
-      <Text style={{fontSize: sizeTemp, color: '#000', textAlign: 'center'}}>
-        {temp}˚C
-      </Text>
-
-      {toShowCity ? (
-        <Text style={{fontSize: 20, color: '#3d3b3d', textAlign: 'center'}}>
-          {city},AR
-        </Text>
-      ) : null}
+      <Text style={{...styles.tempText, fontSize: sizeTemp}}>{temp}˚C</Text>
+      {toShowCity ? <Text style={styles.cityText}>{city},AR</Text> : null}
     </View>
   );
 };
